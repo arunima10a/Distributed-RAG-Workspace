@@ -71,7 +71,7 @@ func (h *Hub) Run() {
 			}
 
 		case msg := <-h.Broadcast:
-			log.Printf("📢 Broadcasting to room [%s], active connections: %v", msg.Room, getMapKeys(h.rooms))
+			log.Printf("Broadcasting to room [%s], active connections: %v", msg.Room, getMapKeys(h.rooms))
 
 			go func(m model.ChatMessage) {
 				_, err := h.db.Exec("INSERT INTO messages (username, room, content, user_id) VALUES ($1, $2, $3, $4)", m.Username, m.Room, m.Content, m.UserID)
@@ -124,15 +124,15 @@ func (h *Hub) ListenToRedisForAI(redisClient *redis.Client) {
 			log.Printf("Error receiving AI reponse from Redis: %v", err)
 			continue
 		}
-		log.Printf("📥 REDIS HEARTBEAT: Received raw message on channel [%s]", msg.Channel)
+		log.Printf("REDIS HEARTBEAT: Received raw message on channel [%s]", msg.Channel)
 
 		if msg.Channel == "llm:room_updates" {
 			var update map[string]string
 			if err := json.Unmarshal([]byte(msg.Payload), &update); err != nil {
 				continue
 			}
-			log.Printf("✨ Hub confirmed: RECEIVED snapshot for room [%s]", update["room"])
-			log.Printf("🔍 Room Match Check: MsgRoom='%s', ActiveRooms=%v", update["room"], h.rooms)
+			log.Printf(" Hub confirmed: RECEIVED snapshot for room [%s]", update["room"])
+			log.Printf("Room Match Check: MsgRoom='%s', ActiveRooms=%v", update["room"], h.rooms)
 
 			h.AIStream <- model.ChatMessage{
 				Username: "SYSTEM_UPDATE",
@@ -148,12 +148,12 @@ func (h *Hub) ListenToRedisForAI(redisClient *redis.Client) {
 		}
 
 		if strings.HasPrefix(msg.Channel, "llm:private:") {
-			log.Printf("🔒 HUB PRIVATE ROUTE: TargetRoom: %s, TargetUser: %d", aiMessage.Room, aiMessage.RecipientID)
+			log.Printf("HUB PRIVATE ROUTE: TargetRoom: %s, TargetUser: %d", aiMessage.Room, aiMessage.RecipientID)
 
 			if roomClients, ok := h.rooms[aiMessage.Room]; ok {
 				if conn, ok := roomClients[aiMessage.RecipientID]; ok {
 					aiMessage.IsPrivate = true
-					log.Printf("🎯 HUB: Found connection for User %d! Sending JSON...", aiMessage.RecipientID)
+					log.Printf("HUB: Found connection for User %d! Sending JSON...", aiMessage.RecipientID)
 					conn.WriteJSON(aiMessage)
 				} else {
 					log.Printf("❌ HUB: User %d NOT FOUND in room %s. Active IDs in this room: %v",
@@ -167,7 +167,7 @@ func (h *Hub) ListenToRedisForAI(redisClient *redis.Client) {
 			// Send to AIStream (Broadcast but NO DB save)
 			h.AIStream <- aiMessage
 		} else if msg.Channel == "llm:final_responses" {
-			log.Printf("💾 Saving AI response to DB for room: %s", aiMessage.Room)
+			log.Printf("Saving AI response to DB for room: %s", aiMessage.Room)
 			_, err := h.db.Exec("INSERT INTO messages (username, room, content) VALUES ($1, $2, $3)",
 				"AI Assistant", aiMessage.Room, aiMessage.Content)
 			if err != nil {

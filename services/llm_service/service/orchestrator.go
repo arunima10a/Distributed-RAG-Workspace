@@ -107,7 +107,7 @@ func (o *LLMOrchestrator) processWithPython(username, prompt, room, intent strin
 		if err == nil && embResp != nil {
 			facts, _ := o.repo.SearchKnowledge(embResp.Embedding, room, userID)
 			docContext = strings.Join(facts, "\n")
-			log.Printf("🔎 RAG Success: Found %d facts for room %s", len(facts), room)
+			log.Printf("RAG Success: Found %d facts for room %s", len(facts), room)
 		}
 	}
 
