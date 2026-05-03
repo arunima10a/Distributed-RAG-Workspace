@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package llm_proto;
+
+option go_package = "github.com/arunima10a/llm-collab-system/internal/llm_proto";
+
+service LLMInference {
+    rpc GenerateResponse(PromptRequest) returns (stream TokenResponse);
+
+    rpc GetEmbedding(EmbeddingRequest) returns (EmbeddingResponse);
+
+    rpc GetUnaryResponse(PromptRequest) returns (TokenResponse);
+}
+
+message PromptRequest {
+    string prompt = 1;
+}
+
+message TokenResponse {
+    string token = 1;
+}
+
+message EmbeddingRequest{
+    string text = 1;
+}
+
+message EmbeddingResponse{
+    repeated float embedding = 1;
+}
