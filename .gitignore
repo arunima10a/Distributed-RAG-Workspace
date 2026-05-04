@@ -6,12 +6,7 @@
 credentials.json
 *.pem
 
-# === Go (Golang) ===
-# Compiled binaries
-go_apps/**/main
-go_apps/**/user_service
-go_apps/**/collaboration_service
-go_apps/**/llm_service
+
 # Dependency folders
 vendor/
 # Test binaries
