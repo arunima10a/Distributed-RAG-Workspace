@@ -47,7 +47,7 @@ func HandleConnections(hub *service.Hub, redisClient *redis.Client, dbConn *sql.
 		username := claims["username"].(string)
 		userID := int(claims["user_id"].(float64))
 
-		//log.Printf("🔍 DEBUG: Bouncer is checking membership for UserID: %d, Room: %s", userID, room)
+		//log.Printf("DEBUG: Bouncer is checking membership for UserID: %d, Room: %s", userID, room)
 
 		if !hub.IsUserInGroup(userID, room) {
 			log.Printf("Blocked: User %s tried to enter private room %s", username, room)
@@ -95,7 +95,6 @@ func HandleConnections(hub *service.Hub, redisClient *redis.Client, dbConn *sql.
 		hub.Register <- sub
 
 		defer func() {
-			// Non-blocking unregister to prevent deadlock
 			select {
 			case hub.Unregister <- sub:
 			default:
@@ -125,8 +124,7 @@ func HandleConnections(hub *service.Hub, redisClient *redis.Client, dbConn *sql.
 			if incoming.Type == "typing" {
 				hub.AIStream <- model.ChatMessage{
 					Username: "SYSTEM_TYPING",
-					Content:  username, // Send the name of who is typing
-					Room:     room,
+					Content:  username, 
 				}
 				continue
 			}
@@ -134,7 +132,7 @@ func HandleConnections(hub *service.Hub, redisClient *redis.Client, dbConn *sql.
 				continue
 			}
 
-			// 2. Handle PRIVATE AI request
+		
 			if incoming.IsPrivate {
 				log.Printf("🔒 Private AI request from %s", username)
 
@@ -153,10 +151,9 @@ func HandleConnections(hub *service.Hub, redisClient *redis.Client, dbConn *sql.
 					log.Printf("Redis publish error: %v", err)
 				}
 
-				continue // 🚨 DO NOT broadcast
+				continue 
 			}
 
-			// 3. Normal message → broadcast
 			chatMsg := model.ChatMessage{
 				Username: username,
 				Content:  incoming.Content,
@@ -165,7 +162,6 @@ func HandleConnections(hub *service.Hub, redisClient *redis.Client, dbConn *sql.
 			}
 			hub.Broadcast <- chatMsg
 
-			// 4. AI command (public)
 			if strings.HasPrefix(incoming.Content, "@ai ") {
 				log.Printf("AI command detected from %s: %s", username, incoming.Content)
 

@@ -164,7 +164,6 @@ func (h *Hub) ListenToRedisForAI(redisClient *redis.Client) {
 			}
 			continue
 		} else if msg.Channel == "llm:responses" {
-			// Send to AIStream (Broadcast but NO DB save)
 			h.AIStream <- aiMessage
 		} else if msg.Channel == "llm:final_responses" {
 			log.Printf("Saving AI response to DB for room: %s", aiMessage.Room)

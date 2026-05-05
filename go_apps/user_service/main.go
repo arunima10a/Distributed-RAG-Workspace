@@ -32,7 +32,6 @@ func main() {
 	r := chi.NewRouter()
 
 	r.Use(cors.Handler(cors.Options{
-		// 📢 ADD your Vite URLs here
 		AllowedOrigins:   []string{"http://localhost:5173", "http://localhost:5174"}, 
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
