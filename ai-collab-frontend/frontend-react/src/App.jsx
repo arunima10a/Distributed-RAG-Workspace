@@ -59,6 +59,14 @@ function App() {
       : {};
   });
 
+  useEffect(() => {
+    // Landing page needs scroll; chat app doesn't
+    document.documentElement.style.overflow = token ? 'hidden' : 'auto';
+    document.body.style.overflow = token ? 'hidden' : 'auto';
+    document.getElementById('root').style.overflow = token ? 'hidden' : 'auto';
+    document.getElementById('root').style.height = token ? '100%' : 'auto';
+  }, [token]);
+
 
   useEffect(() => {
     localStorage.setItem("darkMode", darkMode);
@@ -191,7 +199,7 @@ function App() {
               <Zap size={16} className="text-white" fill="white" />
             </div>
             <div>
-              <div className="text-white font-black text-base tracking-tight leading-none">Collab.AI</div>
+              <div className="text-white font-black text-base tracking-tight leading-none">BuildSpace</div>
               <div className="text-[10px] text-white/30 font-medium mt-0.5">Workspace</div>
             </div>
           </div>
