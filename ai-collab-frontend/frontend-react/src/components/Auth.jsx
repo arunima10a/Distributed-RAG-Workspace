@@ -302,7 +302,7 @@ function Pill({ children }) {
 }
 
 // ── Auth modal ────────────────────────────────────────────────────────────────
-function AuthModal({ onClose, onLogin, defaultMode = 'login' }) {
+export function AuthModal({ onClose, onLogin, defaultMode = 'login' }) {
     const [isRegister, setIsRegister] = useState(defaultMode === 'register');
     const [form, setForm] = useState({ username: '', email: '', password: '' });
     const [loading, setLoading] = useState(false);

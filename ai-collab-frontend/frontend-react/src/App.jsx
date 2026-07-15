@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useChat } from './hooks/useChat'
 import { marked } from 'marked'
 import Auth from './components/Auth'
+import Landing from './components/landing'
 import { Lock, Database, Send, Plus, Hash, User, X, Sparkles, ShieldCheck, Paperclip, Sun, Moon, Zap } from 'lucide-react'
 
 const getSession = () => {
@@ -176,7 +177,7 @@ function App() {
   }, [privateStreaming]);
 
   if (!token) {
-    return <Auth onLogin={handleLoginSuccess} />;
+    return <Landing onLogin={handleLoginSuccess} />;
   }
 
   const dm = darkMode;
@@ -565,7 +566,7 @@ function App() {
               </div>
               <div className="space-y-3">
                 {[
-                  { label: 'Room Name', value: roomNameInput, setter: setRoomNameInput, type: 'text', placeholder: 'e.g. science-lab' },
+                  { label: 'Room Name', value: roomNameInput, setter: setRoomNameInput, type: 'text', placeholder: 'e.g. backend-team' },
                   { label: 'Password', value: roomPassInput, setter: setRoomPassInput, type: 'password', placeholder: '••••••••' }
                 ].map(({ label, value, setter, type, placeholder }) => (
                   <div key={label}>
