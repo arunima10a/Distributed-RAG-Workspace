@@ -73,7 +73,7 @@ Unlike traditional collaboration tools that treat AI as an external assistant, *
 |----------|------------|-------------|
 | ⚡ Real-time Collaboration | Go WebSockets | Concurrent-safe Hub supporting thousands of active connections |
 | 🧠 Semantic RAG | pgvector | Context-aware retrieval from private project knowledge |
-| 🤖 AI Assistant | Gemini 1.5 Flash | Grounded technical assistant integrated directly into collaboration |
+| 🤖 AI Assistant | Gemini Models | Grounded technical assistant integrated directly into collaboration |
 | 📡 Token Streaming | Redis Pub/Sub | Live token-by-token streaming responses |
 | 👀 Passive Observation | Apache Kafka | Background AI listeners maintaining room context |
 | 📌 Room Snapshots | Kafka Workers | Automatic TL;DR generation every 10 messages |
@@ -113,7 +113,7 @@ The platform is built on a **Polyglot Microservices Architecture**, separating r
 - **LLM Inference Service (Python)**
   - Hosts a gRPC server
   - Performs semantic embedding (Sentence-Transformers)
-  - Streams responses from Google Gemini 1.5 Flash
+  - Streams responses from Google Gemini Models
 
 ###  Infrastructure Layer
 
@@ -309,7 +309,7 @@ docker-compose up -d --build
 | Component | Technology |
 |------------|------------|
 | Embedding Model | all-MiniLM-L6-v2 |
-| LLM | Gemini 1.5 Flash |
+| LLM | Gemini Models |
 | Streaming | Redis Pub/Sub |
 | Event Bus | Apache Kafka |
 | Vector DB | PostgreSQL + pgvector |
