@@ -569,7 +569,7 @@ export default function Landing({ onLogin }) {
             <div style={{ width: 34, height: 34, borderRadius: 10, background: 'linear-gradient(135deg, #7c3aed, #4f46e5)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 18px rgba(124,58,237,0.5)', animation: 'glowPulse 3s ease-in-out infinite' }}>
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             </div>
-            <span style={{ fontWeight: 800, fontSize: 17, letterSpacing: '-0.03em' }}>BuildSpace</span>
+            <span style={{ fontWeight: 800, fontSize: 24, letterSpacing: '-0.03em' }}>BuildSpace</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
             <button className="nav-link" onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}>Features</button>
