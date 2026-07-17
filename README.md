@@ -33,7 +33,7 @@ Observing context in real time.
 # 🎥 Demo
 
 <p align="center">
-  <img src="assets/demo.gif" alt="BuildSpace Demo" width="100%">
+  <img src="assets/demo1.gif" alt="BuildSpace Demo" width="100%">
 </p>
 
 ---
