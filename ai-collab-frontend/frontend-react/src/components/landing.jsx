@@ -1,17 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-// Adjust this path to wherever Auth.jsx actually lives relative to Landing.jsx
-// (e.g. if both are in /components, this is correct as './Auth')
 import { AuthModal } from './Auth';
 
 // ── Starfield Canvas ──────────────────────────────────────────────────────────
-// FIX: this canvas is `position: fixed`, which means it only ever occupies the
-// viewport — it does NOT grow with the page. The original code sized its
-// internal resolution to `document.body.scrollHeight` (the full page height)
-// while its CSS box stayed pinned to the viewport. That mismatch forced the
-// browser to squash the whole starfield into the visible viewport area,
-// which both looked wrong and doesn't affect scrolling — but is worth fixing
-// while we're in here. Now it's simply sized to the viewport, which is all a
-// `fixed` element ever needs.
+
 function StarCanvas() {
   const canvasRef = useRef(null);
   const animRef = useRef(null);
@@ -31,7 +22,6 @@ function StarCanvas() {
     resize();
     window.addEventListener('resize', resize);
 
-    // Generate stars (slightly denser + a few more warm/cool tones for depth)
     starsRef.current = Array.from({ length: 320 }, () => ({
       x: Math.random() * W, y: Math.random() * H,
       r: Math.random() * 1.5 + 0.2,
