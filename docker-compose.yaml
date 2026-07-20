@@ -3,8 +3,8 @@ version: '3.8'
 services:
   user_service:
     build:
-      context: . # Look at the project root
-      dockerfile: go_apps/user_service/Dockerfile # Use this specific file
+      context: . 
+      dockerfile: go_apps/user_service/Dockerfile 
     ports: ["8081:8081"]
     environment:
       DB_DSN: "postgres://admin:secretpassword@postgres:5432/collab_db?sslmode=disable"
