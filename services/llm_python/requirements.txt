@@ -2,3 +2,4 @@ grpcio==1.62.1
 grpcio-tools==1.62.1
 sentence-transformers==2.6.1
 requests==2.31.0
+python-dotenv==1.0.1
