@@ -312,7 +312,7 @@ export function AuthModal({ onClose, onLogin, defaultMode = 'login' }) {
         setLoading(true);
         try {
             const endpoint = isRegister ? 'register' : 'login';
-            const res = await fetch(`http://localhost:8081/${endpoint}`, {
+            const res = await fetch(`/${endpoint}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(form)

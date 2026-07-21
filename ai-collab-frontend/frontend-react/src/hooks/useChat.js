@@ -36,7 +36,7 @@ export function useChat(token, room, userId, username) {
 
         const connectTimeout = setTimeout(() => {
             const ws = new WebSocket(
-                `ws://localhost:8082/ws?token=${token}&room=${room.toLowerCase().trim()}`
+                 `${window.location.protocol === "https:" ? "wss" : "ws"}://${window.location.host}/ws?token=${token}&room=${room.toLowerCase().trim()}`
             );
         socket.current = ws;
            

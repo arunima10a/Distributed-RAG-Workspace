@@ -80,7 +80,7 @@ function App() {
 
   useEffect(() => {
     if (!token || !userData.id) return;
-    fetch(`http://localhost:8081/groups/my-groups?user_id=${userData.id}`)
+    fetch(`/groups/my-groups?user_id=${userData.id}`)
       .then(res => res.json())
       .then(groups => {
         // ← guard against null/undefined from backend
@@ -118,7 +118,7 @@ function App() {
     if (!roomNameInput || !roomPassInput) return alert("Fill all fields");
     const endpoint = roomMode === "create" ? "create" : "join";
     try {
-      const res = await fetch(`http://localhost:8081/groups/${endpoint}`, {
+      const res = await fetch(`/groups/${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -134,7 +134,7 @@ function App() {
           setRoomMode("join");
         } else {
           alert(`✅ Joined #${roomNameInput}`);
-          const groupsRes = await fetch(`http://localhost:8081/groups/my-groups?user_id=${userData.id}`);
+          const groupsRes = await fetch(`/groups/my-groups?user_id=${userData.id}`);
           const groups = await groupsRes.json();
           setRooms(["general", ...groups.filter(g => g !== "general")]);
           setRoom(roomNameInput.toLowerCase());
@@ -152,7 +152,7 @@ function App() {
     if (!file) return;
     const formData = new FormData();
     formData.append("file", file);
-    const uploadUrl = `http://localhost:8083/ingest-file?room=${room}&user_id=${isPrivate ? userData.id : 0}`;
+    const uploadUrl = `/ingest-file?room=${room}&user_id=${isPrivate ? userData.id : 0} ? userData.id : 0}`;
     try {
       const res = await fetch(uploadUrl, { method: "POST", body: formData });
       const data = await res.json();
@@ -289,7 +289,9 @@ function App() {
                 : 'bg-violet-50 border-violet-200/60 text-violet-700'}`}>
                 <div className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
                 <span className="font-semibold opacity-60 uppercase text-[9px] tracking-wider">TL;DR</span>
-                <span className="max-w-xs truncate">{roomSummary}</span>
+                <span className="max-w-3xl whitespace-normal break-words">
+                  {roomSummary}
+                </span>
               </div>
             )}
           </div>
@@ -517,7 +519,7 @@ function App() {
                 <button
                   onClick={async () => {
                     const text = document.getElementById('km-input-react').value;
-                    await fetch(`http://localhost:8083/ingest?room=${room}&user_id=0`, {
+                    await fetch(`/ingest?room=${room}&user_id=0`, {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({ content: text })
