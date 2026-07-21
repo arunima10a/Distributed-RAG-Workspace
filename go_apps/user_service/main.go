@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"os"
 	"net/http"
 
 	"github.com/arunima10a/llm-collab-system/internal/db"
@@ -14,7 +15,7 @@ import (
 
 func main() {
 
-	dsn := "postgres://admin:secretpassword@localhost:5433/collab_db?sslmode=disable"
+	dsn := os.Getenv("DB_DSN")
 
 	postgresDB, err := db.InitPostgres(dsn)
 	if err != nil {
@@ -32,7 +33,11 @@ func main() {
 	r := chi.NewRouter()
 
 	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:5173", "http://localhost:5174"}, 
+ AllowedOrigins: []string{
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://34.100.178.113",
+    },
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
 		AllowCredentials: true,

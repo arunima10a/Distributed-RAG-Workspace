@@ -138,7 +138,11 @@ func (h *Ingesthandler) HandleFileIngest(w http.ResponseWriter, r *http.Request)
 			log.Printf("Failed chunk: %v", err)
 			continue
 		}
-		h.repo.SaveKnowledge(chunk, resp.Embedding, room, userID)
+		if err := h.repo.SaveKnowledge(chunk, resp.Embedding, room, userID); err != nil {
+    log.Printf("SAVE ERROR: %v", err)
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+}
 	}
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(map[string]string{"message": "Document ingested and chunked successfully"})
